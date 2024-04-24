@@ -1,14 +1,16 @@
 const { createServer } = require("node:http");
+const path = require("path");
 
 const express = require("express");
+const { Server } = require("socket.io");
+const compression = require("compression");
 
 const app = express();
 const httpServer = createServer(app);
-const { Server } = require("socket.io");
-const path = require("node:path");
 
 const io = new Server(httpServer);
 
+app.use(compression());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res, next) => {
